@@ -23,4 +23,5 @@ urlpatterns = [
     # path('login/', login, name='login'),
     # path('logout/', logout_view, name='logout'),
     # path('signup/', signup, name='signup'),    
+    path('createproject/', create_project, name="create_project"),
 ]
