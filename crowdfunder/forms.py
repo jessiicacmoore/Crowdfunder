@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.forms import CharField, PasswordInput, Form, ModelForm
 from django import forms
 from crowdfunder.models import Project

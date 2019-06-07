@@ -14,7 +14,6 @@ def home(request):
     response = render(request, 'index.html', context)
     return HttpResponse(response)
 
-<<<<<<< HEAD
 def login_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('')
