@@ -40,14 +40,14 @@ Iteration 3
     Need:
         As a backer, I want to see who the owner of a project is
         As a user I should be able to visit my profile page and see a list of all the projects I have backed, the total amount I have pledged on the site, and a list of all the projects I own
-        As a project owner, I want to see how many people have funded my project at each reward
 
 
     Want:
-        As a project owner, I would like the ability to set limits on how many people can fund at certain rewards
+        As a backer, I want to be able to find other projects owned by that same person
 
     Nice:
-        As a backer, I want to be able to find other projects owned by that same person
+        As a project owner, I would like the ability to set limits on how many people can fund at certain rewards
+        As a project owner, I want to see how many people have funded my project at each reward
         As a user, I should be able to visit a different user's profile and see their bio and a list of projects they own
 
 
@@ -61,10 +61,10 @@ Iteration 4
 
     Want:
         As a backer, I want to be able to see all projects in a particular category
-        As a project owner, to help people find my project, I want the ability to add various tags to my project
-        As a backer, I want the ability to see all the projects associated with a particular tag
 
     Nice:
+        As a backer, I want the ability to see all the projects associated with a particular tag
+        As a project owner, to help people find my project, I want the ability to add various tags to my project
 
 
 ___________________________________________________________
