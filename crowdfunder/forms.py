@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Project, 
+from .models import Project
 
-def CreateProject(ModelForm):
+class CreateProject(ModelForm):
     class Meta:
         model = Project
         fields = [
