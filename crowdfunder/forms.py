@@ -13,6 +13,7 @@ class CreateProject(ModelForm):
             'title',
             'picture',
             'description',
+            'category',
             'funding_goal',
             'start_date',
             'end_date',

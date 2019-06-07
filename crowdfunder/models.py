@@ -2,6 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+CATEGORY_CHOICES = (
+    ('tech','tech'),
+    ('comics', 'comics'),
+    ('game','game'),
+    ('food','food'),
+    ('music','music'),
+)
+
 class Project(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
     title = models.CharField(max_length=255)
@@ -12,7 +20,7 @@ class Project(models.Model):
     end_date = models.DateField()
     amount_funded = models.DecimalField(decimal_places=1, max_digits=4, default=0)
     number_of_backers = models.IntegerField(default=0)
-    # category = models.CharField(max_length=255)
+    category = models.CharField(max_length=6, choices=CATEGORY_CHOICES, default='tech')
     # status_updates =  models.CharField(max_length=255)
 
     def __str__(self):
