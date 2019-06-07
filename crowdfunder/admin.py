@@ -3,6 +3,5 @@ from .models import *
 
 admin.site.register(Project)
 admin.site.register(Reward)
-admin.site.register(Profile)
 admin.site.register(Comment)
 admin.site.register(Donation)
