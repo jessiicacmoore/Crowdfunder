@@ -7,12 +7,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from crowdfunder.forms import LoginForm
 from .models import *
+from .forms import *
 
 def home(request):
     context = {'projects': Project.objects.all()}
     response = render(request, 'index.html', context)
     return HttpResponse(response)
 
+<<<<<<< HEAD
 def login_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('')
@@ -54,3 +56,18 @@ def signup(request):
         form = UserCreationForm()
     html_response =  render(request, 'signup.html', {'form': form})
     return HttpResponse(html_response)
+
+def create_project(request):
+
+    if request.method == "POST":
+        form = CreateProject(request.POST)
+        if form.is_valid():
+            new_project = form.save(commit = False)
+            new_project.owner = request.user
+            new_project.save()
+            return redirect('home')
+    else:
+        form = CreateProject()
+
+    context = {'form': form}
+    return render(request, 'create_project.html', context)
