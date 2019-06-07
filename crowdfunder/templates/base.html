@@ -11,28 +11,44 @@
 </head>
 <body>
     <header class="site-header">
-        <nav>
-                {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}">Sign out</a>
-                {% else %}
-                <a href="{% url 'login' %}">Sign in</a>
-                <a href="{% url 'signup' %}">New User</a>
-                {% endif %}
-                <section class="search">
-                        <form action="{% url 'restaurant_search' %}" method="GET">
-                            <label for="restaurant-search">
-                              <span>Search:</span>
-                              <input
-                            type="search"
-                                id="restaurant-search"
-                                name="query"
-                                value="{{ query }}"
-                            />
-                            </label>
-                </section>
+        <nav id="navigation">
+            <a href="{% url 'home' %}">Crowdfunder</a>
+            <a href="{% url 'start_project' id=start.pk %}">Start project</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}">Sign out</a>
+            {% else %}
+            <a href="{% url 'login' %}">Sign in</a>
+            <a href="{% url 'signup' %}">New User</a>
+            {% endif %}
+            <form class="search-bar" action="{% url 'crowdfunder_search' %}" method="get">
+                <label for="picture-search">
+                    <span>search:</span>
+                    <input type="search" id="crowdfunder-search" name="query" value="{{ query }}"/>
+                </label>
+                <input type="submit" value="Search" />
+            </form>
+            {% block category %}
+            <div class="category-nav">
+                <ul id="category">
+                    <li>{% block category-comics %}<a href="{% url comics %}">Comics</a>{% endblock %}</li>
+                    <li>{% block category-tech %}<a href="{% url tech %}">Tech</a>{% endblock %}</li>
+                    <li>{% block category-food %}<a href="{% url food %}">Food</a>{% endblock %}</li>
+                    <li>{% block category-games %}<a href="{% url games %}">Games</a>{% endblock %}</li>
+                    <li>{% block category-music %}<a href="{% url music %}">Music</a>{% endblock %}</li>
+                </ul>
+            </div>
+            {% endblock %}
         </nav>
-
-
+    </header>
+    <main>
+        {% block content %}
+        <h2 class="photo-title">{{ project.title }}</h2>
+        <h3 class="photo-artist">By: {{ project.username }}</h3>
+        <div class="photo-wrapper">
+            <img src="{{ project.url }}" alt="{{ project.title }}"/>
+        {% endblock %}
+        </div>
+    </main>
     
 </body>
 </html>

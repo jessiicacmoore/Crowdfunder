@@ -7,6 +7,14 @@
 * As a project owner, I want to set a funding goal for my project
     * This must be a positive number
 * As a project owner, I want to set a funding period (start date, finish date) for my project
+* description
+* title
+* funding goal
+* funding period
+* start day
+* finish day
+
+
     * The start date must be in the future
     * The end date must be later than the start date
 
