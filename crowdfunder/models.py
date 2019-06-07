@@ -40,19 +40,15 @@ class Reward(models.Model):
     description = models.TextField(null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
 
-class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')    
-    name = models.CharField(max_length=255)
-    commment = models.TextField()
+class Donation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donations')
+    reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='donations')
+    donation_amount = models.DecimalField(decimal_places=1, max_digits=4, default=0)
 
 class Comment(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     message = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='comments')
 
-class Donation(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='donations')
-    project = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donations")
-    donation_amount = models.DecimalField(decimal_places=1, max_digits=4, default=0)
-    # reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations')
 
