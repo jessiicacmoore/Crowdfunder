@@ -11,18 +11,38 @@
 </head>
 <body>
     <header class="site-header">
-        <nav>
-                {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}" role="button">Sign out</a>
-                {% else %}
-                <a href="{% url 'login' %}" role="button">Sign in</a>
-                <a href="{% url 'signup' %}" role="button">New User</a>
-                {% endif %}
-
+        <nav id="navigation">
+            <a href="{% url 'home' %}">Crowdfunder</a>
+            <a href="{% url 'start_project' id=start.pk %}">Start project</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" role="button">Sign out</a>
+            {% else %}
+            <a href="{% url 'login' %}" role="button">Sign in</a>
+            <a href="{% url 'signup' %}" role="button">New User</a>
+            {% endif %}
+            <form class="search-bar" action="{% url 'crowdfunder_search' %}" method="get">
+                <label for="picture-search">
+                    <span>search:</span>
+                    <input type="search" id="crowdfunder-search" name="query" value="{{ query }}"/>
+                </label>
+                <input type="submit" value="Search" />
+            </form>
+            <div class="category-nav">
+                <ul id="category">
+                    <li>{% block category-comics %}<a href="{% url comics %}">Comics</a>{% endblock %}</li>
+                    <li>{% block category-tech %}<a href="{% url tech %}">Tech</a>{% endblock %}</li>
+                    <li>{% block category-food %}<a href="{% url food %}">Food</a>{% endblock %}</li>
+                    <li>{% block category-games %}<a href="{% url games %}">Games</a>{% endblock %}</li>
+                    <li>{% block category-music %}<a href="{% url music %}">Music</a>{% endblock %}</li>
+                </ul>
+            </div>
         </nav>
+    </header>
+    <main>
+        {% block content %}
 
-
-
-        {% block content %} {% endblock %}    
+        {% endblock %}
+        </div>
+    </main>
 </body>
 </html>

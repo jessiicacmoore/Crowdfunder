@@ -2,6 +2,9 @@
 
 {% block content %}
 <main class="home-main">
-Fund Me Now!
+        <h2 class="photo-title">{{ project.title }}</h2>
+        <h3 class="photo-artist">By: {{ project.username }}</h3>
+        <div class="photo-wrapper">
+            <img src="{{ project.url }}" alt="{{ project.title }}"/>
 </main>
 {% endblock %}
