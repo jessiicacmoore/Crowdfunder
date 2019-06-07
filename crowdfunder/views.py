@@ -61,7 +61,10 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            
             login(request, user)
+            new_profile = Profile.objects.create(name=user.name, user=user)
+            new_profile.save()
             return HttpResponseRedirect('')
     else:
         form = UserCreationForm()
@@ -99,3 +102,8 @@ def donate(request, id):
 
     context = {'form': form, 'project': project}
     return render(request, 'make_donation.html', context)
+    
+def profile_view(request):
+    context = {'profiles': Profile.objects.all()}
+    response = render(request, 'profile.html', context)
+    return HttpResponse(response)
