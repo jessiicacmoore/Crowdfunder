@@ -37,6 +37,9 @@ class Profile(models.Model):
     funded_project = models.CharField(max_length=255)
     commment = models.TextField()
 
+    def __str__(self):
+        return f'{self.name}'
+
 class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
     message = models.TextField()
