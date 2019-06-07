@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Sum
+
+
 
 
 CATEGORY_CHOICES = (
@@ -25,6 +28,12 @@ class Project(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+    def update_donation_stats(self):
+        self.amount_funded = self.donations.aggregate(Sum('donation_amount'))
+        self.number_of_backers = self.donations.count(distinct=True)
+        self.save()
+
 
 class Reward(models.Model):
     name = models.CharField(max_length=255)
