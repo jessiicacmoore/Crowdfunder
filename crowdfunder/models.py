@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Project(models.Model):
-    owner = models.CharField(max_length=255)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
     title = models.CharField(max_length=255)
     picture = models.URLField()
     description = models.TextField()
@@ -11,7 +11,7 @@ class Project(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     amount_funded = models.DecimalField(decimal_places=1, max_digits=4, default=0)
-    number_of_backers = models.IntegerField()
+    number_of_backers = models.IntegerField(default=0)
     # category = models.CharField(max_length=255)
     # status_updates =  models.CharField(max_length=255)
 
