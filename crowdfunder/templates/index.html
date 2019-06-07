@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <main class="home-main">
-        <h2 class="photo-title">{{ project.title }}</h2>
-        <h3 class="photo-artist">By: {{ project.username }}</h3>
-        <div class="photo-wrapper">
-            <img src="{{ project.url }}" alt="{{ project.title }}"/>
+    <h2>FEATURED PROJECT</h2>
+    {% for project in projects %}
+        <div class="project-description">
+            <h3>Project: {{ Project.title }}</h3>
+            <h3 class="project-author">By: {{ project.username }}</h3>
+            <p>{{ project.description }}</p>
+        </div>
+        <div class="project-wrapper">
+            <img src="{{ project.picture }}" alt="{{ project.title }}"/>
+        </div>
+    {% endfor %}
+
 </main>
 {% endblock %}

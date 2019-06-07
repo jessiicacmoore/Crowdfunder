@@ -10,9 +10,21 @@ from .models import *
 from .forms import *
 
 def home(request):
-    context = {'projects': Project.objects.all()}
-    response = render(request, 'index.html', context)
-    return HttpResponse(response)
+    return render(request, 'index.html', {
+        'projects': Project.objects.all().order_by('-id')[:9]
+    })
+
+def profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    owned_projects = user.projects.all()
+    # backed_projects = [d.project for d in user.donations.all()]
+    donations = user.donations.all()
+
+    return render(request, "profile.html", {
+        'user': user,
+        'owned_projects': owned_projects,
+        'donations': donations
+    })
 
 def login_view(request):
     if request.user.is_authenticated:

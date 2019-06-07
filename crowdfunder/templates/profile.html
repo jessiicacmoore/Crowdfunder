@@ -1,0 +1,19 @@
+<h1>Profile for {{ user.email }}</h1>
+
+<h2>Owned Projects</h2>
+<ul>
+    {% for project in owned_projects %}
+        <li>
+            {{project.title}}
+        </li>
+    {% endfor %}
+</ul>
+
+<h2>Projects Donated To</h2>
+<ul>
+    {% for donation in donations %}
+        <li>
+            {{donation.project}}
+        </li>
+    {% endfor %}
+</ul>
