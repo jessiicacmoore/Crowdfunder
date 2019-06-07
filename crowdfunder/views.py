@@ -5,10 +5,52 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-
+from crowdfunder.forms import LoginForm
 from .models import *
 
 def home(request):
     context = {'projects': Project.objects.all()}
     response = render(request, 'index.html', context)
     return HttpResponse(response)
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            pw = form.cleaned_data['password']
+            user = authenticate(username=username, password=pw)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('')
+            else:
+                form.add_error('username', 'Login failed')
+    else:
+        form = LoginForm()
+
+    context = {'form': form}
+    http_response = render(request, 'login.html', context)
+    return HttpResponse(http_response)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('')
+
+def signup(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('')
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect('')
+    else:
+        form = UserCreationForm()
+    html_response =  render(request, 'signup.html', {'form': form})
+    return HttpResponse(html_response)
