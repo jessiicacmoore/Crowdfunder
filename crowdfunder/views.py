@@ -70,3 +70,20 @@ def create_project(request):
 
     context = {'form': form}
     return render(request, 'create_project.html', context)
+
+def donate(request, id):
+    project = get_object_or_404(Project, pk=id)
+
+    if request.method == "POST":
+        form = MakeDonation(request.POST)
+        if form.is_valid():
+            new_donation = form.save(commit = False)
+            new_donation.user = request.user
+            new_donation.project = project
+            new_project.save()
+            return redirect('home')
+    else:
+        form = MakeDonation()
+
+    context = {'form': form, 'project': project}
+    return render(request, 'make_donation.html', context)

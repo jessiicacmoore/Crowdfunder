@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Sum
+
 
 
 
@@ -27,6 +29,12 @@ class Project(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    def update_donation_stats(self):
+        self.amount_funded = self.donations.aggregate(Sum('donation_amount'))
+        self.number_of_backers = self.donations.count(distinct=True)
+        self.save()
+
+
 class Reward(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True)
@@ -45,6 +53,6 @@ class Comment(models.Model):
 class Donation(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='donations')
     project = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donations")
-    # reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations')
     donation_amount = models.DecimalField(decimal_places=1, max_digits=4, default=0)
+    # reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations')
 

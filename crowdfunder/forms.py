@@ -1,6 +1,6 @@
 from django.forms import CharField, PasswordInput, Form, ModelForm
 from django import forms
-from crowdfunder.models import Project
+from crowdfunder.models import *
 
 import datetime as dt
 
@@ -23,4 +23,11 @@ class CreateProject(ModelForm):
             'start_date',
             'end_date',
             'end_date',
+        ]
+
+class MakeDonation(ModelForm):
+    class Meta:
+        model = Donation
+        fields = [
+            'donation_amount',
         ]
