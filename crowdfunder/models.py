@@ -37,6 +37,9 @@ class Donation(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='donations')
     donation_amount = models.DecimalField(decimal_places=1, max_digits=4, default=0)
 
+    def __str__(self):
+        return f'{self.name}'
+
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     message = models.TextField()
