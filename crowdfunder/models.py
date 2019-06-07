@@ -5,17 +5,15 @@ from django.db import models
 class Project(models.Model):
     owner = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
+    picture = models.URLField()
     description = models.TextField()
     funding_goal = models.DecimalField(decimal_places=1, max_digits=4, default=0)
     start_date = models.DateField()
     end_date = models.DateField()
     amount_funded = models.DecimalField(decimal_places=1, max_digits=4, default=0)
     number_of_backers = models.IntegerField()
-    category = models.CharField(max_length=255)
-    rewards = models.CharField(max_length=255)
+    # category = models.CharField(max_length=255)
     status_updates =  models.CharField(max_length=255)
-    comments = models.TextField()
-    pictures = models.URLField()
 
     def __str__(self):
         return f'{self.title}'
