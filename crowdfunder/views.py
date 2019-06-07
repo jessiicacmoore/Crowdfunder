@@ -71,6 +71,11 @@ def signup(request):
     html_response =  render(request, 'signup.html', {'form': form})
     return HttpResponse(html_response)
 
+def project_detail(request, id):
+    project = get_object_or_404(Project, pk=id)
+    context = {'project': project}
+    return render(request, 'project_detail.html', context)
+
 def create_project(request):
 
     if request.method == "POST":
