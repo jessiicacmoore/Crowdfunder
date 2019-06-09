@@ -97,15 +97,12 @@ def donate(request, id):
     if request.method == "POST":
         form = MakeDonation(request.POST)
         if form.is_valid():
-            new_donation = form.save(commit = False)
-            new_donation.user = request.user
-            new_donation.project = project
-            new_donation.save()
+            new_donation = form.save()
             project.update_total_funded()
             project.update_total_backers()
             return redirect('project_detail', id=id)
     else:
-        form = MakeDonation()
+        form = MakeDonation(initial={'user': request.user, 'project':project})
 
     context = {'form': form, 'project': project}
     return render(request, 'make_donation.html', context)
