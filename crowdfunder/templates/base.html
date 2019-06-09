@@ -21,6 +21,15 @@
             <a href="{% url 'signup' %}" role="button">New User</a>
             {% endif %}
         </nav>
+        <div class="category-nav">
+            <ul id="category">
+                <li>{% block category-comics %}<a href="{% url 'category' cat='comics' %}">Comics</a>{% endblock %}</li>
+                <li>{% block category-tech %}<a href="{% url 'category' cat='tech' %}">Tech</a>{% endblock %}</li>
+                <li>{% block category-food %}<a href="{% url 'category' cat='food' %}">Food</a>{% endblock %}</li>
+                <li>{% block category-games %}<a href="{% url 'category' cat='games' %}">Games</a>{% endblock %}</li>
+                <li>{% block category-music %}<a href="{% url 'category' cat='music' %}">Music</a>{% endblock %}</li>
+            </ul>
+    </div>
     </header>
     <main>
         {% block content %}
