@@ -22,8 +22,12 @@ class CreateProject(ModelForm):
             'funding_goal',
             'start_date',
             'end_date',
-            'end_date',
         ]
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Your project title'}),
+            'picture': forms.URLInput(attrs={'placeholder': 'Picture url'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Your project description'}),
+        }
 
 class MakeDonation(ModelForm):
     class Meta:
@@ -35,7 +39,7 @@ class MakeDonation(ModelForm):
         ]
         widgets = {
             'user': forms.HiddenInput(),
-            'project': forms.HiddenInput()
+            'project': forms.HiddenInput(),
         }
     
     def clean(self):
