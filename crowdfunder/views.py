@@ -74,7 +74,16 @@ def signup(request):
 def project_detail(request, id):
     project = get_object_or_404(Project, pk=id)
     existing_donation = project.donations.filter(user=request.user)
-    context = {'project': project, 'existing_donation': existing_donation}
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save()
+            return redirect('project_detail', id=id)
+    else:
+        form = CommentForm(initial={'user': request.user, 'project':project})
+
+    context = {'project': project, 'existing_donation': existing_donation, 'form': form}
     return render(request, 'project_detail.html', context)
 
 def create_project(request):

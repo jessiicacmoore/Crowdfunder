@@ -49,3 +49,16 @@ class MakeDonation(ModelForm):
 
         if donation_user == project.owner:
             raise forms.ValidationError("You cannot donate to your own project!")
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'user',
+            'project',
+            'message'
+        ]
+        widgets = {
+            'user': forms.HiddenInput(),
+            'project': forms.HiddenInput()
+        }
