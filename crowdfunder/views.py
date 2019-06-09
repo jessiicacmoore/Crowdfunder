@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
@@ -114,3 +114,9 @@ def profile_view(request):
     context = {'profiles': Profile.objects.all()}
     response = render(request, 'profile.html', context)
     return HttpResponse(response)
+
+def category(request, cat):
+    category_projects = get_list_or_404(Project, category=cat)
+    context = {'category': cat, 'projects': category_projects}
+    return render(request, 'category_list.html', context)
+  

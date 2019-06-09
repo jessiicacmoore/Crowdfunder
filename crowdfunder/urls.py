@@ -26,6 +26,6 @@ urlpatterns = [
     path('signup/', signup, name='signup'),    
     path('createproject/', create_project, name="create_project"),
     path('project/<int:id>', project_detail, name="project_detail"),
-    path('project/<int:id>/donate/', donate, name="donate")
-    path('project/category/<str:cat>/', category, name="category")
+    path('project/<int:id>/donate/', donate, name="donate"),
+    path('category/<slug:cat>/', category, name="category")
 ]
