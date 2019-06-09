@@ -29,5 +29,19 @@ class MakeDonation(ModelForm):
     class Meta:
         model = Donation
         fields = [
+            'user',
+            'project',
             'donation_amount',
         ]
+        widgets = {
+            'user': forms.HiddenInput(),
+            'project': forms.HiddenInput()
+        }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        donation_user = cleaned_data.get("user")
+        project = cleaned_data.get("project")
+
+        if donation_user == project.owner:
+            raise forms.ValidationError("You cannot donate to your own project!")
