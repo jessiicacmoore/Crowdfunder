@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Sum
 
+from datetime import date
+
 
 
 
@@ -38,6 +40,9 @@ class Project(models.Model):
         unique_backers = self.donations.values('user').distinct()
         self.number_of_backers = unique_backers.count()
         self.save()
+
+    def is_past_due(self):
+        return date.today() > self.end_date
 
     def days_until_due(self):
         difference = self.end_date - self.start_date

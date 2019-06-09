@@ -3,7 +3,11 @@
 {% block content %}
 <main>
     <h2>{{ project.title }}</h2>
-    <h3>{{  project.days_until_due  }} days to reach ${{ project.funding_goal }} goal</h3>
+    {% if project.is_past_due %}
+    <h3>This project did not meet it's goal of ${{ project.funding_goal }} by {{ project.end_date }}</h3>
+    {% else %}
+    <h3>This project has {{  project.days_until_due  }} days to reach it's ${{ project.funding_goal }} goal</h3>
+    {% endif %}
     <h3>Started by: {{ project.owner.username }}</h3>
     <ul class="project-stats">
         <li>${{ project.amount_funded }} raised</li>
