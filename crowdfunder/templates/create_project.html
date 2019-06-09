@@ -1,6 +1,7 @@
 <main class="create_project">
     <h2>Create your project</h2>
     <form method="POST">
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Add project</button>
     </form>

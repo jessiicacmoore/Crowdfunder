@@ -71,6 +71,11 @@ def signup(request):
     html_response =  render(request, 'signup.html', {'form': form})
     return HttpResponse(html_response)
 
+def project_detail(request, id):
+    project = get_object_or_404(Project, pk=id)
+    context = {'project': project}
+    return render(request, 'project_detail.html', context)
+
 def create_project(request):
 
     if request.method == "POST":
@@ -86,6 +91,25 @@ def create_project(request):
     context = {'form': form}
     return render(request, 'create_project.html', context)
 
+def donate(request, id):
+    project = get_object_or_404(Project, pk=id)
+
+    if request.method == "POST":
+        form = MakeDonation(request.POST)
+        if form.is_valid():
+            new_donation = form.save(commit = False)
+            new_donation.user = request.user
+            new_donation.project = project
+            new_donation.save()
+            project.update_total_funded()
+            project.update_total_backers()
+            return redirect('project_detail', id=id)
+    else:
+        form = MakeDonation()
+
+    context = {'form': form, 'project': project}
+    return render(request, 'make_donation.html', context)
+    
 def profile_view(request):
     context = {'profiles': Profile.objects.all()}
     response = render(request, 'profile.html', context)

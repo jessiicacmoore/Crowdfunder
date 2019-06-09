@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Sum
+
+
 
 
 CATEGORY_CHOICES = (
@@ -26,19 +29,34 @@ class Project(models.Model):
     def __str__(self):
         return f'{self.title}'
 
-class Reward(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
+    def update_total_funded(self):
+        donations = self.donations.aggregate(Sum('donation_amount'))
+        self.amount_funded = donations['donation_amount__sum']
+        self.save()
+
+    def update_total_backers(self):
+        unique_backers = self.donations.values('user').distinct()
+        self.number_of_backers = unique_backers.count()
+        self.save()
+
+    def days_until_due(self):
+        difference = self.end_date - self.start_date
+        return difference.days
+
+
+# class Reward(models.Model):
+#     name = models.CharField(max_length=255)
+#     description = models.TextField(null=True)
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
 
 class Donation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donations')
-    reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations')
+    # reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='donations')
     donation_amount = models.DecimalField(decimal_places=1, max_digits=4, default=0)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.donation_amount}'
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')

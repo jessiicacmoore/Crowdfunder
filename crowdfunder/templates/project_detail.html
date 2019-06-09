@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <h2>{{ project.title }}</h2>
+    <h3>{{  project.days_until_due  }} days to reach ${{ project.funding_goal }} goal</h3>
+    <ul class="project-stats">
+        <li>${{ project.amount_funded }} raised</li>
+        <li>{{ project.number_of_backers }} backers</li>
+    </ul>
+    <a href="{% url 'donate' id=project.id %}">Make a donation</a>
+    <img src="{{ project.picture }}" alt="">
+    <p>
+        {{ project.description|linebreaks }}
+    </p>
+</main>
+{% endblock %}

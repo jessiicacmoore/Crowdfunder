@@ -4,11 +4,9 @@
     <h2>FEATURED PROJECT</h2>
     {% for project in projects %}
         <div class="project-description">
-        <h2 class="photo-title">{{ project.title }}</h2>
-        <h3 class="photo-artist">By: {{ project.username }}</h3>
-        <div class="photo-wrapper">
-            <img src="{{ project.url }}" alt="{{ project.title }}" />
-        </div>
+        <h2 class="project-title">{{ project.title }}</h2>
+        <h3 class="project-owner">By: {{ project.owner }}</h3>
+        <h3 class="project-description">{{ project.description }}</h3>
         <div class="project-wrapper">
             <img src="{{ project.picture }}" alt="{{ project.title }}" />
         </div>
