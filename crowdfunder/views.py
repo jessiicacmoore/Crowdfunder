@@ -101,9 +101,9 @@ def donate(request, id):
             new_donation.user = request.user
             new_donation.project = project
             new_donation.save()
-            project.update_donation_stats()
-
-            return redirect('home')
+            project.update_total_funded()
+            project.update_total_backers()
+            return redirect('project_detail', id=id)
     else:
         form = MakeDonation()
 
