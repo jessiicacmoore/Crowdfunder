@@ -25,4 +25,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('signup/', signup, name='signup'),    
     path('createproject/', create_project, name="create_project"),
+    path('new_project/', new_project, name="new_project"),
 ]

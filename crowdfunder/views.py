@@ -42,8 +42,7 @@ def login_view(request):
                 form.add_error('username', 'Login failed')
     else:
         form = LoginForm()
-
-    context = {'form': form}
+    context = {'title': 'Log in', 'form': form}
     http_response = render(request, 'login.html', context)
     return HttpResponse(http_response)
 
@@ -65,20 +64,23 @@ def signup(request):
             return HttpResponseRedirect('')
     else:
         form = UserCreationForm()
-    html_response =  render(request, 'signup.html', {'form': form})
+    html_response =  render(request, 'signup.html', {'title': 'Sign up', 'form': form})
     return HttpResponse(html_response)
 
+@login_required
+def new_project(request):
+    context = {'title':'Create a new project', 'form': CreateProject()}
+    html_string = render(request, 'new_project.html', context)
+    return HttpResponse(html_string)
+
+@login_required
 def create_project(request):
-
-    if request.method == "POST":
-        form = CreateProject(request.POST)
-        if form.is_valid():
-            new_project = form.save(commit = False)
-            new_project.owner = request.user
-            new_project.save()
-            return redirect('home')
+    form = CreateProject(request.POST)
+    if form.is_valid():
+        new_project = form.instance
+        new_project.user = request.user
+        new_project.save()
+        return HttpResponseRedirect("/")
     else:
-        form = CreateProject()
-
-    context = {'form': form}
-    return render(request, 'create_project.html', context)
+        html_string = render(request, 'create_project.html', {'title': 'Create a new project', 'form': CreateProject(request.POST)})
+        return HttpResponse(html_string)
