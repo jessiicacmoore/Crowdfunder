@@ -25,6 +25,6 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('signup/', signup, name='signup'),    
     path('createproject/', create_project, name="create_project"),
-    # path('project/<int:id>', project_detail, name="project_detail"),
+    path('project/<int:id>', project_detail, name="project_detail"),
     path('project/<int:id>/donate/', donate, name="donate")
 ]
