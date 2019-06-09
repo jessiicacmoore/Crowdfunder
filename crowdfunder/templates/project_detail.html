@@ -8,6 +8,9 @@
         <li>${{ project.amount_funded }} raised</li>
         <li>{{ project.number_of_backers }} backers</li>
     </ul>
+    {% if existing_donation %}
+    <p>You've donated to this project before!</p>
+    {% endif %}
     <a href="{% url 'donate' id=project.id %}">Make a donation</a>
     <img src="{{ project.picture }}" alt="">
     <p>
