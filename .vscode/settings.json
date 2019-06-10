@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
+    "python.pythonPath": "/Users/timkur/.pyenv/shims/python"
+=======
     "python.pythonPath": "/Users/judoboy/.pyenv/versions/crowdfunder/bin/python"
+>>>>>>> 856e9b9e944f911bc93b057b9245a5fdb1f0834f
 }

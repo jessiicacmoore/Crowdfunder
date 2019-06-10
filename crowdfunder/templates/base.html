@@ -15,8 +15,8 @@
     <header class="site-header">
         <nav id="navigation">
             <a href="{% url 'home' %}">Crowdfunder</a>
-            <a href="{% url 'create_project' %}">Start project</a>
             {% if request.user.is_authenticated %}
+            <a href="{% url 'create_project' %}" role="button">Start a new project</a>
             <a href="{% url 'logout' %}" role="button">Sign out</a>
             {% else %}
             <a href="{% url 'login' %}" role="button">Sign in</a>

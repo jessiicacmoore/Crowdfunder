@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
 <main class="create_project">
+    <h1>Please login to add a project</h1>    
     <h2>Create your project</h2>
     <form method="POST">
         {% csrf_token %}
@@ -6,3 +9,4 @@
         <button type="submit">Add project</button>
     </form>
 </main>
+{% endblock %}
