@@ -18,6 +18,7 @@
         <p>You've donated to this project before!</p>
         {% endif %}
         <a href="{% url 'donate' id=project.id %}">Make a donation</a>
+        <a href="{% url 'projects_by_owner' id=project.owner.id %}">More projects by {{ project.owner.username }}</a>
         <img src="{{ project.picture }}" alt="">
         <div class="description-body">
             {{ project.description|linebreaks }}

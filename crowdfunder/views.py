@@ -126,4 +126,9 @@ def category(request, cat):
     category_projects = get_list_or_404(Project, category=cat)
     context = {'category': cat, 'projects': category_projects}
     return render(request, 'category_list.html', context)
-  
+
+def projects_by_owner(request, id):
+    owner = get_object_or_404(User, pk=id)
+    context = {'owner': owner}
+    return render(request, 'owner_projects.html', context)
+
