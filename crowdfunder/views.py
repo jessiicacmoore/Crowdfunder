@@ -156,3 +156,9 @@ def add_reward(request, id):
     context = {'form': form, 'project': project}
     return render(request, 'new_reward.html', context)
 
+def profile_list(request):
+    users = User.objects.all()
+
+    return render(request, "profile_list.html", {
+        'users': users,      
+    })
