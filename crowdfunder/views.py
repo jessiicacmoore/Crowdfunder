@@ -122,7 +122,11 @@ def donate(request, id):
 
 def category(request, cat):
     category_projects = get_list_or_404(Project, category=cat)
-    context = {'category': cat, 'projects': category_projects}
+    successful_projects = Project.get_successful_percentage_category(cat)
+    context = {
+        'category': cat,
+        'projects': category_projects,
+        'success_rate': successful_projects}
     return render(request, 'category_list.html', context)
 
 def projects_by_owner(request, id):
