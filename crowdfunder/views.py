@@ -127,7 +127,7 @@ def donate(request, id):
 
 def category(request, cat):
     category_projects = get_list_or_404(Project, category=cat)
-    if successful_category_projects_exist(cat):
+    if Project.successful_category_projects_exist(cat):
         successful_projects = Project.get_successful_percentage_category(cat)
     else:
         successful_projects = 0

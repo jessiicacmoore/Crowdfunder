@@ -10,7 +10,7 @@ from datetime import date
 CATEGORY_CHOICES = (
     ('tech','tech'),
     ('comics', 'comics'),
-    ('game','game'),
+    ('games','games'),
     ('food','food'),
     ('music','music'),
 )
