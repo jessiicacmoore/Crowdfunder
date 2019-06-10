@@ -38,6 +38,9 @@
                 <h4>{{ reward.name }}</h4>
                 <p>{{ reward.description }}</p>
                 <p><strong>Rewarded for ${{ reward.donation_value }}</strong></p>
+                {% if user == project.owner %}
+                <p><em>this reward has been achieved {{ reward.donations.count }} times</em></p>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
