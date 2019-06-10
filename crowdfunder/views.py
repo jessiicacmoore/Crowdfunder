@@ -110,7 +110,9 @@ def donate(request, id):
     if request.method == "POST":
         form = MakeDonation(request.POST)
         if form.is_valid():
-            new_donation = form.save()
+            new_donation = form.save(commit=False)
+            new_donation.get_reward(id)
+            new_donation.save()
             project.update_total_funded()
             project.update_total_backers()
             return redirect('project_detail', id=id)
@@ -139,4 +141,18 @@ def search_results(request):
     search_results = (Project.objects.filter(title__icontains=query))
     context = {"projects": search_results, "query": query}
     return render(request, "search_results.html", context)
+
+def add_reward(request, id):
+    project = get_object_or_404(Project, pk=id, owner=request.user.pk)
+    if request.method == "POST":
+        form = AddRewardForm(request.POST)
+        if form.is_valid:
+            new_reward = form.save()
+            return redirect('project_detail', id=id)
+
+    else:
+        form = AddRewardForm(initial={'project': project})
     
+    context = {'form': form, 'project': project}
+    return render(request, 'new_reward.html', context)
+

@@ -69,22 +69,35 @@ class Project(models.Model):
 
         return percentage
 
+class Reward(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True)
+    donation_value = models.DecimalField(decimal_places=2, max_digits=8, default=0.00)
+    cap = models.IntegerField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
 
+    # make query list of all projects rewards, and sort by donation value
+    # when donation is made iterate through list and make if/else statement that will apply reward to donation
 
-# class Reward(models.Model):
-#     name = models.CharField(max_length=255)
-#     description = models.TextField(null=True)
-#     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='rewards')
+    def __str__(self):
+        return f'{self.project} - {self.name} - {self.donation_value}'
 
 class Donation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donations')
     # reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='donations')
     donation_amount = models.DecimalField(decimal_places=2, max_digits=5, default=0)
+    reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name='donations', null=True)
+
 
     def __str__(self):
         return f'{self.project}, {self.donation_amount}'
-        
+
+    def get_reward(self, project_id):
+        rewards = Reward.objects.filter(project=project_id).order_by('donation_value')
+        for reward in rewards:
+            if reward.donations.all().count() < reward.cap and self.donation_amount >= reward.donation_value:
+                self.reward = reward
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')

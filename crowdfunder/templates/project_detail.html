@@ -23,6 +23,10 @@
         <div class="description-body">
             {{ project.description|linebreaks }}
         </div>
+
+        {% if user == project.owner %}
+            <a href="{% url 'add_reward' id=project.id %}" class="reward-link">Add a reward to your project</a>
+        {% endif %}
     </section>
     <section class="project-comments">
         <h3>Comments:</h3>
