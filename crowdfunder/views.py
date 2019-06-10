@@ -44,8 +44,7 @@ def login_view(request):
                 form.add_error('username', 'Login failed')
     else:
         form = LoginForm()
-
-    context = {'form': form}
+    context = {'title': 'Log in', 'form': form}
     http_response = render(request, 'login.html', context)
     return HttpResponse(http_response)
 
@@ -70,9 +69,15 @@ def signup(request):
             return HttpResponseRedirect('')
     else:
         form = UserCreationForm()
-    html_response =  render(request, 'signup.html', {'form': form})
+    html_response =  render(request, 'signup.html', {'title': 'Sign up', 'form': form})
     return HttpResponse(html_response)
 
+@login_required
+def new_project(request):
+    context = {'title':'Create a new project', 'form': CreateProject()}
+    html_string = render(request, 'new_project.html', context)
+    return HttpResponse(html_string)
+    
 def project_detail(request, id):
     project = get_object_or_404(Project, pk=id)
     existing_donation = project.donations.filter(user=request.user)
@@ -90,14 +95,17 @@ def project_detail(request, id):
 
 def create_project(request):
 
-    if request.method == "POST":
-        form = CreateProject(request.POST)
-        if form.is_valid():
-            new_project = form.save(commit = False)
-            new_project.owner = request.user
-            new_project.save()
-            return redirect('home')
+@login_required
+def create_project(request):
+    form = CreateProject(request.POST)
+    if form.is_valid():
+        new_project = form.instance
+        new_project.user = request.user
+        new_project.save()
+        return HttpResponseRedirect("/")
     else:
+        html_string = render(request, 'create_project.html', {'title': 'Create a new project', 'form': CreateProject(request.POST)})
+        return HttpResponse(html_string)
         form = CreateProject()
 
     context = {'form': form}
@@ -134,3 +142,9 @@ def projects_by_owner(request, id):
     context = {'owner': owner}
     return render(request, 'owner_projects.html', context)
 
+def search_results(request):
+    query = request.GET["query"]
+    search_results = (Project.objects.filter(title__icontains=query))
+    context = {"projects": search_results, "query": query}
+    return render(request, "search_results.html", context)
+    
