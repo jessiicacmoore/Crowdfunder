@@ -39,7 +39,7 @@ def login_view(request):
             user = authenticate(username=username, password=pw)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('')
+                return HttpResponseRedirect('/')
             else:
                 form.add_error('username', 'Login failed')
     else:
@@ -50,7 +50,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('')
+    return HttpResponseRedirect('/')
 
 def signup(request):
     if request.user.is_authenticated:
