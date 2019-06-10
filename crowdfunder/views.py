@@ -54,16 +54,16 @@ def logout_view(request):
 
 def signup(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect('')
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+            user = authenticate(username=username, password=raw_password)           
             login(request, user)
-            return HttpResponseRedirect('')
+            return HttpResponseRedirect('/')
     else:
         form = UserCreationForm()
     html_response =  render(request, 'signup.html', {'title': 'Sign up', 'form': form})
@@ -116,11 +116,6 @@ def donate(request, id):
 
     context = {'form': form, 'project': project}
     return render(request, 'make_donation.html', context)
-    
-def profile_view(request):
-    context = {'profiles': Profile.objects.all()}
-    response = render(request, 'profile.html', context)
-    return HttpResponse(response)
 
 def category(request, cat):
     category_projects = get_list_or_404(Project, category=cat)
