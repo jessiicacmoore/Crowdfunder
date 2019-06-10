@@ -51,6 +51,16 @@ class Project(models.Model):
         difference = self.end_date - self.start_date
         return difference.days
 
+    @classmethod
+    def get_successful_percentage(cls):
+        successful_projects = Project.objects.filter(end_date__lte=date.today(), amount_funded__gte=models.F("funding_goal")).count()
+        completed_projects = Project.objects.filter(end_date__lte=date.today()).count()
+
+        percentage = int((successful_projects / completed_projects) * 100)
+
+        return percentage
+
+
 
 # class Reward(models.Model):
 #     name = models.CharField(max_length=255)

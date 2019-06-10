@@ -10,9 +10,13 @@ from .models import *
 from .forms import *
 
 def home(request):
-    return render(request, 'index.html', {
-        'projects': Project.objects.all().order_by('-id')[:9]
-    })
+    featured_projects = Project.objects.all().order_by('-id')[:9]
+    successful_projects = Project.get_successful_percentage()
+    context = {
+        "projects": featured_projects,
+        "success_rate": successful_projects
+    }
+    return render(request, 'index.html', context)
 
 def profile(request, user_id):
     user = User.objects.get(id=user_id)
