@@ -11,7 +11,10 @@ from .forms import *
 
 def home(request):
     featured_projects = Project.objects.all().order_by('-id')[:9]
-    successful_projects = Project.get_successful_percentage()
+    if Project.successful_projects_exist():
+        successful_projects = Project.get_successful_percentage()
+    else:
+        successful_projects = 0
     context = {
         "projects": featured_projects,
         "success_rate": successful_projects
