@@ -68,13 +68,6 @@ def signup(request):
         form = UserCreationForm()
     html_response =  render(request, 'signup.html', {'title': 'Sign up', 'form': form})
     return HttpResponse(html_response)
-
-
-@login_required
-def new_project(request):
-    context = {'title':'Create a new project', 'form': CreateProject()}
-    html_string = render(request, 'new_project.html', context)
-    return HttpResponse(html_string)
     
 def project_detail(request, id):
     project = get_object_or_404(Project, pk=id)
@@ -91,23 +84,21 @@ def project_detail(request, id):
     context = {'project': project, 'existing_donation': existing_donation, 'form': form}
     return render(request, 'project_detail.html', context)
 
-
 @login_required
 def create_project(request):
     form = CreateProject(request.POST)
     if form.is_valid():
-        new_project = form.instance
-        new_project.user = request.user
+        new_project = form.save(commit=False)
+        new_project.owner = request.user
         new_project.save()
-        return HttpResponseRedirect("/")
+        return redirect('project_detail', id=new_project.id)
     else:
-        html_string = render(request, 'create_project.html', {'title': 'Create a new project', 'form': CreateProject(request.POST)})
-        return HttpResponse(html_string)
         form = CreateProject()
 
     context = {'form': form}
     return render(request, 'create_project.html', context)
 
+@login_required
 def donate(request, id):
     project = get_object_or_404(Project, pk=id)
 
