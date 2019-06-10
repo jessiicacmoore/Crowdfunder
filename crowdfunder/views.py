@@ -34,7 +34,7 @@ def profile(request, user_id):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect('')
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -43,7 +43,7 @@ def login_view(request):
             user = authenticate(username=username, password=pw)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('')
+                return HttpResponseRedirect('/')
             else:
                 form.add_error('username', 'Login failed')
     else:
@@ -54,7 +54,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('')
+    return HttpResponseRedirect('/')
 
 def signup(request):
     if request.user.is_authenticated:
@@ -140,3 +140,9 @@ def search_results(request):
     context = {"projects": search_results, "query": query}
     return render(request, "search_results.html", context)
     
+def profile_list(request):
+    users = User.objects.all()
+
+    return render(request, "profile_list.html", {
+        'users': users,      
+    })
