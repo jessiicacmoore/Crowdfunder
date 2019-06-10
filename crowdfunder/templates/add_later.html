@@ -5,13 +5,3 @@
         </label>
         <input type="submit" value="Search" />
 </form>
-
-<div class="category-nav">
-        <ul id="category">
-            <li>{% block category-comics %}<a href="{% url comics %}">Comics</a>{% endblock %}</li>
-            <li>{% block category-tech %}<a href="{% url tech %}">Tech</a>{% endblock %}</li>
-            <li>{% block category-food %}<a href="{% url food %}">Food</a>{% endblock %}</li>
-            <li>{% block category-games %}<a href="{% url games %}">Games</a>{% endblock %}</li>
-            <li>{% block category-music %}<a href="{% url music %}">Music</a>{% endblock %}</li>
-        </ul>
-</div>
