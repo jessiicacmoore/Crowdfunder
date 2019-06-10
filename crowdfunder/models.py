@@ -66,6 +66,11 @@ class Project(models.Model):
         return percentage
 
     @classmethod
+    def successful_category_projects_exist(cls, cat):
+        successful_projects = Project.objects.filter(category=cat, end_date__lte=date.today(), amount_funded__gte=models.F("funding_goal")).count()
+        return successful_projects > 0
+
+    @classmethod
     def get_successful_percentage_category(cls, cat):
         successful_projects = Project.objects.filter(category=cat, end_date__lte=date.today(), amount_funded__gte=models.F("funding_goal")).count()
         completed_projects = Project.objects.filter(category=cat, end_date__lte=date.today()).count()
