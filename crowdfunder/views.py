@@ -30,7 +30,7 @@ def profile(request, user_id):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect('')
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -132,3 +132,9 @@ def search_results(request):
     context = {"projects": search_results, "query": query}
     return render(request, "search_results.html", context)
     
+def profile_list(request):
+    users = User.objects.all()
+
+    return render(request, "profile_list.html", {
+        'users': users,      
+    })

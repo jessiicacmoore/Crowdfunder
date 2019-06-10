@@ -95,3 +95,6 @@ class CommentForm(ModelForm):
             'user': forms.HiddenInput(),
             'project': forms.HiddenInput()
         }
+
+
+   
