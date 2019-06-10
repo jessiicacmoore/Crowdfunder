@@ -132,3 +132,9 @@ def projects_by_owner(request, id):
     context = {'owner': owner}
     return render(request, 'owner_projects.html', context)
 
+def search_results(request):
+    query = request.GET["query"]
+    search_results = (Project.objects.filter(title__icontains=query))
+    context = {"projects": search_results, "query": query}
+    return render(request, "search_results.html", context)
+    
