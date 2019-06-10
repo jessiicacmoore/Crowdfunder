@@ -86,15 +86,16 @@ def project_detail(request, id):
 
 @login_required
 def create_project(request):
-    form = CreateProject(request.POST)
-    if form.is_valid():
-        new_project = form.save(commit=False)
-        new_project.owner = request.user
-        new_project.save()
-        return redirect('project_detail', id=new_project.id)
+    if request.method == 'POST':
+        form = CreateProject(request.POST)
+        if form.is_valid():
+            new_project = form.save(commit=False)
+            new_project.owner = request.user
+            new_project.save()
+            return redirect('project_detail', id=new_project.id)
     else:
         form = CreateProject()
-
+        
     context = {'form': form}
     return render(request, 'create_project.html', context)
 
