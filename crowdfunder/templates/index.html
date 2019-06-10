@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <main class="home-main">
-    <h2>FEATURED PROJECT</h2>
+    <h2>FEATURED PROJECTS</h2>
+    <h3>{{ success_rate }}% of projects site wide have been successfully funded!</h3>
     {% for project in projects %}
         <div class="project-description">
         <h2 class="project-title">{{ project.title }}</h2>
