@@ -88,13 +88,11 @@ def project_detail(request, id):
 def create_project(request):
     form = CreateProject(request.POST)
     if form.is_valid():
-        new_project = form.instance
-        new_project.user = request.user
+        new_project = form.save(commit=False)
+        new_project.owner = request.user
         new_project.save()
-        return HttpResponseRedirect("/")
+        return redirect('project_detail', id=new_project.id)
     else:
-        html_string = render(request, 'create_project.html', {'title': 'Create a new project', 'form': CreateProject(request.POST)})
-        return HttpResponse(html_string)
         form = CreateProject()
 
     context = {'form': form}
