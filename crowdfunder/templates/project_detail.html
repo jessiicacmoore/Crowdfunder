@@ -23,7 +23,26 @@
         <div class="description-body">
             {{ project.description|linebreaks }}
         </div>
+
     </section>
+
+    <section class="rewards">
+        <h3>Rewards:</h3>
+
+        {% if user == project.owner %}
+            <a href="{% url 'add_reward' id=project.id %}" class="reward-link">Add a reward to your project</a>
+        {% endif %}
+        <ul class="rewards-container">
+            {% for reward in project.rewards.all %}
+            <li class="reward-item">
+                <h4>{{ reward.name }}</h4>
+                <p>{{ reward.description }}</p>
+                <p><strong>Rewarded for ${{ reward.donation_value }}</strong></p>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
     <section class="project-comments">
         <h3>Comments:</h3>
         <form method="POST" class="comment-form">
