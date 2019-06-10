@@ -30,5 +30,6 @@ urlpatterns = [
     path('project/<int:id>/add-reward/', add_reward, name="add_reward"),
     path('category/<slug:cat>/', category, name="category"),
     path('owner/<int:id>/', projects_by_owner, name="projects_by_owner"),
-    path('results/', search_results, name="search_results")
+    path('results/', search_results, name="search_results"),
+    path('profile_list/', profile_list, name="profile_list"),
 ]
