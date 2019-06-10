@@ -33,23 +33,34 @@ class CreateProject(ModelForm):
             'description': forms.Textarea(attrs={'placeholder': 'Your project description'}),
         }
 
-    def clean_published_date(self):
-        # localizing both dates
-        publishedDate = self.cleaned_data['published_date']
-        presentDate = date.fromtimestamp(datetime.now(timezone('America/Toronto')).timestamp())
-        print(presentDate)
-        print(publishedDate)
-        isDraft = self.cleaned_data['draft']
-        if isDraft:
-            if publishedDate < presentDate:
-                raise ValidationError('Specified date must be in the future!')
-            else:
-                return publishedDate
-        else:
-            if publishedDate > presentDate:
-                raise ValidationError('Specified date must be in the past!')
-            else:
-                return publishedDate
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data['start_date']
+        end_date = cleaned_data['end_date']
+
+        if start_date > end_date:
+            raise forms.ValidationError('End date bust be later than the start date!')
+        
+
+
+    # def clean_published_date(self):
+    #     # localizing both dates
+    #     publishedDate = self.cleaned_data['published_date']
+    #     presentDate = date.fromtimestamp(datetime.now(timezone('America/Toronto')).timestamp())
+    #     print(presentDate)
+    #     print(publishedDate)
+
+    #     isDraft = self.cleaned_data['draft']
+    #     if isDraft:
+    #         if publishedDate < presentDate:
+    #             raise ValidationError('Specified date must be in the future!')
+    #         else:
+    #             return publishedDate
+    #     else:
+    #         if publishedDate > presentDate:
+    #             raise ValidationError('Specified date must be in the past!')
+    #         else:
+    #             return publishedDate
 
 class MakeDonation(ModelForm):
     class Meta:
