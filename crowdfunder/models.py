@@ -40,6 +40,9 @@ class Project(models.Model):
         unique_backers = self.donations.values('user').distinct()
         self.number_of_backers = unique_backers.count()
         self.save()
+    
+    def met_goal(self):
+        return self.amount_funded >= self.funding_goal
 
     def is_past_due(self):
         return date.today() > self.end_date
