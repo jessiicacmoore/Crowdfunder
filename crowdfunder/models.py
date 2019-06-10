@@ -33,7 +33,9 @@ class Project(models.Model):
         self.amount_funded = self.donations.aggregate(Sum('donation_amount'))
         self.number_of_backers = self.donations.count(distinct=True)
         self.save()
-
+    
+    def met_goal(self):
+        return self.amount_funded >= self.funding_goal
 
 class Reward(models.Model):
     name = models.CharField(max_length=255)
@@ -47,7 +49,7 @@ class Donation(models.Model):
     donation_amount = models.DecimalField(decimal_places=1, max_digits=4, default=0)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.project}'
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')

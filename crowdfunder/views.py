@@ -18,12 +18,14 @@ def profile(request, user_id):
     user = User.objects.get(id=user_id)
     owned_projects = user.projects.all()
     # backed_projects = [d.project for d in user.donations.all()]
+    funded_count = [p.met_goal for p in owned_projects].count(True)
     donations = user.donations.all()
 
     return render(request, "profile.html", {
         'user': user,
         'owned_projects': owned_projects,
-        'donations': donations
+        'donations': donations,
+        'funded_count': funded_count,
     })
 
 def login_view(request):
@@ -105,7 +107,4 @@ def donate(request, id):
     context = {'form': form, 'project': project}
     return render(request, 'make_donation.html', context)
     
-def profile_view(request):
-    context = {'profiles': Profile.objects.all()}
-    response = render(request, 'profile.html', context)
-    return HttpResponse(response)
+
