@@ -75,12 +75,6 @@ class Project(models.Model):
         percentage = int((successful_projects / completed_projects) * 100)
         return percentage
 
-    @classmethod
-    def get_category_total_funding(cls, cat):
-        category_projects = cls.objects.filter(category=cat)
-        donations = category_projects.all().aggregate(donation_total=Sum('donations__donation_amount'))
-        return donations['donation_total']
-
 
 
 
