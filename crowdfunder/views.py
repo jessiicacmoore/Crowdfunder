@@ -14,6 +14,20 @@ def home(request):
         'projects': Project.objects.all().order_by('-id')[:9]
     })
 
+
+def account(request):
+    user = User.objects.get(id=request.user.id)
+    owned_projects = user.projects.all()
+    funded_count = [p.met_goal for p in owned_projects].count(True)
+    donations = user.donations.all()
+
+    return render(request, "profile.html", {
+        'user': user,
+        'owned_projects': owned_projects,
+        'donations': donations,
+        'funded_count': funded_count,
+    })
+
 def profile(request, user_id):
     user = User.objects.get(id=user_id)
     owned_projects = user.projects.all()
@@ -30,7 +44,7 @@ def profile(request, user_id):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect('')
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -39,7 +53,7 @@ def login_view(request):
             user = authenticate(username=username, password=pw)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('')
+                return HttpResponseRedirect('/')
             else:
                 form.add_error('username', 'Login failed')
     else:

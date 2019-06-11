@@ -51,6 +51,8 @@ class Project(models.Model):
         difference = self.end_date - self.start_date
         return difference.days
 
+        
+
 
 # class Reward(models.Model):
 #     name = models.CharField(max_length=255)

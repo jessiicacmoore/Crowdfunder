@@ -37,8 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'crowdfunder',
 ]
+
+AUTHENTICATION_BACKENDS=(
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +61,7 @@ ROOT_URLCONF = 'crowdfunder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,3 +126,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '141657733370-nkjtdp5qrcghtn8q873uiluqnaja9mhj.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'TUnOug7pp-Ndf8WLUNSGk03G'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'home'
