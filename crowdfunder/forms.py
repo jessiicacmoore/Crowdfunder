@@ -39,7 +39,7 @@ class CreateProject(ModelForm):
         end_date = cleaned_data['end_date']
 
         if start_date > end_date:
-            raise forms.ValidationError('End date bust be later than the start date!')
+            raise forms.ValidationError('End date must be later than the start date!')
         
 
 class AddRewardForm(ModelForm):
