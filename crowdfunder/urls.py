@@ -30,9 +30,11 @@ urlpatterns = [
     path('createproject/', create_project, name="create_project"),
     path('project/<int:id>', project_detail, name="project_detail"),
     path('project/<int:id>/donate/', donate, name="donate"),
+    path('project/<int:id>/add-reward/', add_reward, name="add_reward"),
     path('category/<slug:cat>/', category, name="category"),
     path('owner/<int:id>/', projects_by_owner, name="projects_by_owner"),
     path('results/', search_results, name="search_results"),
     url(r'^auth/', include('social_django.urls', namespace='social')),  # <- Here
     url(r'^$', home, name='home'),
+    path('profile_list/', profile_list, name="profile_list"),
 ]

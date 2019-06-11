@@ -10,9 +10,16 @@ from .models import *
 from .forms import *
 
 def home(request):
-    return render(request, 'index.html', {
-        'projects': Project.objects.all().order_by('-id')[:9]
-    })
+    featured_projects = Project.objects.all().order_by('-id')[:9]
+    if Project.successful_projects_exist():
+        successful_projects = Project.get_successful_percentage()
+    else:
+        successful_projects = 0
+    context = {
+        "projects": featured_projects,
+        "success_rate": successful_projects
+    }
+    return render(request, 'index.html', context)
 
 
 def account(request):
@@ -64,7 +71,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('')
+    return HttpResponseRedirect('/')
 
 def signup(request):
     if request.user.is_authenticated:
@@ -120,7 +127,9 @@ def donate(request, id):
     if request.method == "POST":
         form = MakeDonation(request.POST)
         if form.is_valid():
-            new_donation = form.save()
+            new_donation = form.save(commit=False)
+            new_donation.get_reward(id)
+            new_donation.save()
             project.update_total_funded()
             project.update_total_backers()
             return redirect('project_detail', id=id)
@@ -132,7 +141,16 @@ def donate(request, id):
 
 def category(request, cat):
     category_projects = get_list_or_404(Project, category=cat)
-    context = {'category': cat, 'projects': category_projects}
+    category_funding = Project.get_category_total_funding(cat)
+    if Project.successful_category_projects_exist(cat):
+        successful_projects = Project.get_successful_percentage_category(cat)
+    else:
+        successful_projects = 0
+    context = {
+        'category': cat,
+        'projects': category_projects,
+        'category_funding': category_funding,
+        'success_rate': successful_projects}
     return render(request, 'category_list.html', context)
 
 def projects_by_owner(request, id):
@@ -145,4 +163,24 @@ def search_results(request):
     search_results = (Project.objects.filter(title__icontains=query))
     context = {"projects": search_results, "query": query}
     return render(request, "search_results.html", context)
+
+def add_reward(request, id):
+    project = get_object_or_404(Project, pk=id, owner=request.user.pk)
+    if request.method == "POST":
+        form = AddRewardForm(request.POST)
+        if form.is_valid:
+            new_reward = form.save()
+            return redirect('project_detail', id=id)
+
+    else:
+        form = AddRewardForm(initial={'project': project})
     
+    context = {'form': form, 'project': project}
+    return render(request, 'new_reward.html', context)
+
+def profile_list(request):
+    users = User.objects.all()
+
+    return render(request, "profile_list.html", {
+        'users': users,      
+    })

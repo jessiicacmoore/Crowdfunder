@@ -10,16 +10,16 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <header class="site-header">
-        <nav id="navigation">
-            <a href="{% url 'home' %}">Crowdfunder</a>
+            <a  href="{% url 'home' %}">Crowdfunder</a>
             {% if request.user.is_authenticated %}
             <a href="{% url 'create_project' %}" role="button">Start a new project</a>
-            <a href="{% url 'logout' %}" role="button">Sign out</a>
+            <a  href="{% url 'logout' %}" role="button">Sign out</a>
             {% else %}
             <a href="{% url 'login' %}" role="button">Sign in</a>
-            <a href="{% url 'signup' %}" role="button">New User</a>
+            <a  href="{% url 'signup' %}" role="button">New User</a>
             {% endif %}
+            
+            <a  href="{% url 'profile_list' %}" role="button">List of Profiles</a>
         </nav>
         <div class="category-nav">
             <ul id="category">
