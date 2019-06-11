@@ -62,9 +62,7 @@ class Project(models.Model):
     def get_successful_percentage(cls):
         successful_projects = Project.objects.filter(end_date__lte=date.today(), amount_funded__gte=models.F("funding_goal")).count()
         completed_projects = Project.objects.filter(end_date__lte=date.today()).count()
-
         percentage = int((successful_projects / completed_projects) * 100)
-
         return percentage
 
     @classmethod
@@ -76,14 +74,11 @@ class Project(models.Model):
     def get_successful_percentage_category(cls, cat):
         successful_projects = Project.objects.filter(category=cat, end_date__lte=date.today(), amount_funded__gte=models.F("funding_goal")).count()
         completed_projects = Project.objects.filter(category=cat, end_date__lte=date.today()).count()
-
-        try:
-            percentage = int((successful_projects / completed_projects) * 100)
-
-        except ZeroDivisionError:
-            percentage = 0
-
+        percentage = int((successful_projects / completed_projects) * 100)
         return percentage
+
+
+
 
 class Reward(models.Model):
     name = models.CharField(max_length=255)

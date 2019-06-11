@@ -21,6 +21,20 @@ def home(request):
     }
     return render(request, 'index.html', context)
 
+
+def account(request):
+    user = User.objects.get(id=request.user.id)
+    owned_projects = user.projects.all()
+    funded_count = [p.met_goal for p in owned_projects].count(True)
+    donations = user.donations.all()
+
+    return render(request, "profile.html", {
+        'user': user,
+        'owned_projects': owned_projects,
+        'donations': donations,
+        'funded_count': funded_count,
+    })
+
 def profile(request, user_id):
     user = User.objects.get(id=user_id)
     owned_projects = user.projects.all()
