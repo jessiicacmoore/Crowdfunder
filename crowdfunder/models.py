@@ -29,7 +29,7 @@ class Project(models.Model):
     # status_updates =  models.CharField(max_length=255)
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.title} - {self.owner.username}'
 
     def update_total_funded(self):
         donations = self.donations.aggregate(Sum('donation_amount'))
@@ -40,9 +40,11 @@ class Project(models.Model):
         unique_backers = self.donations.values('user').distinct()
         self.number_of_backers = unique_backers.count()
         self.save()
-    
+
     def met_goal(self):
+
         return self.amount_funded >= self.funding_goal
+
 
     def is_past_due(self):
         return date.today() > self.end_date
