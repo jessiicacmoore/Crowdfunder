@@ -25,7 +25,7 @@ def profile(request, user_id):
     user = User.objects.get(id=user_id)
     owned_projects = user.projects.all()
     # backed_projects = [d.project for d in user.donations.all()]
-    funded_count = [p.met_goal for p in owned_projects].count(True)
+    funded_count = [project.met_goal() for project in owned_projects].count(True)
     donations = user.donations.all()
 
     return render(request, "profile.html", {
@@ -68,14 +68,14 @@ def signup(request):
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)           
+            user = authenticate(username=username, password=raw_password)
             login(request, user)
             return HttpResponseRedirect('/')
     else:
         form = UserCreationForm()
     html_response =  render(request, 'signup.html', {'title': 'Sign up', 'form': form})
     return HttpResponse(html_response)
-    
+
 def project_detail(request, id):
     project = get_object_or_404(Project, pk=id)
     existing_donation = project.donations.filter(user=request.user)
@@ -102,7 +102,7 @@ def create_project(request):
             return redirect('project_detail', id=new_project.id)
     else:
         form = CreateProject()
-        
+
     context = {'form': form}
     return render(request, 'create_project.html', context)
 
@@ -158,7 +158,7 @@ def add_reward(request, id):
 
     else:
         form = AddRewardForm(initial={'project': project})
-    
+
     context = {'form': form, 'project': project}
     return render(request, 'new_reward.html', context)
 
@@ -166,5 +166,5 @@ def profile_list(request):
     users = User.objects.all()
 
     return render(request, "profile_list.html", {
-        'users': users,      
+        'users': users,
     })
