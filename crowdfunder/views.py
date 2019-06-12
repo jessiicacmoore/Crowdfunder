@@ -145,10 +145,12 @@ def category(request, cat):
         successful_projects = Project.get_successful_percentage_category(cat)
     else:
         successful_projects = 0
+    category_funding = Project.get_category_funds_raised(cat)
     context = {
         'category': cat,
         'projects': category_projects,
-        'success_rate': successful_projects}
+        'success_rate': successful_projects,
+        'category_funds': category_funding}
     return render(request, 'category_list.html', context)
 
 def projects_by_owner(request, id):
