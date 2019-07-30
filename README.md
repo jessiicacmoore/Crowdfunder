@@ -1,17 +1,17 @@
-# django_crowdfunder
+# Crowdfunder
 
--Project title Crowdfunder
+A backend clone of Kick starter using Django. As a team, we were tasked with managing and prioritizing user stories to complete a viable product within a short period of time. This project required agile development and team coding with GitHub. 
 
--Motivation The app met to clone from scratch https://www.kickstarter.com/
+## Core Technologies Used
+- Python
+- Django
+- SQLite
+- CSS
+- Git & GitHub
+- Agile Development
 
--Screanshots to be updated
 
--Tech/framework used Python Django The team used https://trello.com/b/eJp9W5PS/crowdfunder in order to optimize the teams' collaboration.
-
--How to use? to be updated
-
-Team members: -Jessica Moore https://github.com/jessiicacmoore/
-
--Timur Kurbanov https://github.com/timurkurbanov https://www.linkedin.com/in/timur-kurbanov/
-
--Alexander G. Yang https://github.com/JudoboyAlex
+## Team
+- [Timur Kurbanov](https://timkurbanov.ca/)
+- [Alex Yang](https://www.alexyang.ca/)
+- [Jessica Moore](https://www.jessicacmoore.com/)
